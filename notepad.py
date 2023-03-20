@@ -49,10 +49,32 @@ class Notepad:
         self.__thisMenuBar.add_cascade(label="File",menu=self.__thisFileMenu)
 
 
-        self.__thisEditMenu.add_command(label="Cut",command=self.__cut)
-        self.__thisEditMenu.add_command(label="Copy",command=self.__copy)
-        self.__thisEditMenu.add_command(label="Paste",command=self.__paste)
+        self.__thisEditMenu.add_command(label="Cut",accelerator="Ctrl+X",command=self.__cut)
+        self.__root.bind("<Control-x>", self.__cut)
+        self.__thisEditMenu.add_command(label="Copy",accelerator="Ctrl+C",command=self.__copy)
+        self.__root.bind("<Control-c>", self.__copy)
+        self.__thisEditMenu.add_command(label="Paste",accelerator="Ctrl+V",command=self.__paste)
+        self.__root.bind("<Control-v>", self.__paste)
+        self.__thisEditMenu.add_command(label="Undo",accelerator="Ctrl+Z", command=self.__undo)
+        self.__root.bind("<Control-<>", self.__undo)
+
         self.__thisMenuBar.add_cascade(label="Edit",menu=self.__thisEditMenu)
+
+        # Format menu
+        self.__thisFormatMenu = Menu(self.__thisMenuBar, tearoff=0)
+        self.__thisMenuBar.add_cascade(label="Format", menu=self.__thisFormatMenu)
+
+        # Font boyutunu ayarla
+        self.__fontSizeVar = IntVar()
+        self.__fontSizeVar.set(12)  # varsayılan olarak 12 punto ayarla
+        self.__thisFormatMenu.add_radiobutton(label="Font Size", variable=self.__fontSizeVar, value=12, command=self.__setFont)
+
+         # Font stili
+        self.__fontStyleVar = StringVar()
+        self.__fontStyleVar.set('normal')  # varsayılan olarak normal stil ayarla
+        self.__thisFormatMenu.add_radiobutton(label="Normal", variable=self.__fontStyleVar, value='normal', command=self.__setFont)
+        self.__thisFormatMenu.add_radiobutton(label="Bold", variable=self.__fontStyleVar, value='bold', command=self.__setFont)
+        self.__thisFormatMenu.add_radiobutton(label="Italic", variable=self.__fontStyleVar, value='italic', command=self.__setFont)
 
         self.__thisHelpMenu.add_command(label="About Notepad",command=self.__showAbout)
         self.__thisMenuBar.add_cascade(label="Help",menu=self.__thisHelpMenu)
@@ -111,8 +133,16 @@ class Notepad:
 
     def __paste(self):
         self.__thisTextArea.event_generate("<<Paste>>")
+    
+    def __undo(self):
+        self.__thisTextArea.edit_undo()
+
+    def __setFont(self):
+        font = f"TkDefaultFont {self.__fontSizeVar.get()} {self.__fontStyleVar.get()}"
+        self.__thisTextArea.configure(font=font)
+
     def run(self):
-        self.__root.mainloop()
+        self.__root.mainloop()    
 
 notepad=Notepad(width=600,height=400)
 notepad.run()
