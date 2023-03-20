@@ -6,13 +6,13 @@ from tkinter.messagebox import showinfo
 
 class Notepad:
     __root=Tk()
-    __thisWidth=600
+    __thisWidth=800 # Pencere genişliği değiştirildi
     __thisHeight=600
-    __thisTextArea=Text(__root)
-    __thisMenuBar=Menu(__root)
-    __thisFileMenu=Menu(__thisMenuBar,tearoff=0)
-    __thisEditMenu=Menu(__thisMenuBar,tearoff=0)
-    __thisHelpMenu=Menu(__thisMenuBar,tearoff=0)    
+    __thisTextArea=Text(__root, font=("Helvetica", 12)) # Yazı tipi değiştirildi
+    __thisMenuBar=Menu(__root, font=("Helvetica", 12), bg="white", fg="black", activebackground="gray", activeforeground="white")
+    __thisFileMenu=Menu(__thisMenuBar,tearoff=0, font=("Helvetica", 12), bg="white", fg="black", activebackground="gray", activeforeground="white")
+    __thisEditMenu=Menu(__thisMenuBar,tearoff=0, font=("Helvetica", 12), bg="white", fg="black", activebackground="gray", activeforeground="white")
+    __thisHelpMenu=Menu(__thisMenuBar,tearoff=0, font=("Helvetica", 12), bg="white", fg="black", activebackground="gray", activeforeground="white")    
     __thisScrollBar=Scrollbar(__thisTextArea)
     __file=None
     def __init__(self,**kwargs):
