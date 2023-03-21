@@ -17,7 +17,7 @@ class Notepad:
     __file=None
     def __init__(self,**kwargs):
         try:
-            self.__root.wm_iconbitmap("Notepad.ico")
+            self.__root.wm_iconbitmap("notepad.ico")
         except:
             pass
         try:
@@ -86,7 +86,7 @@ class Notepad:
         self.__thisTextArea.config(yscrollcommand=self.__thisScrollBar.set)
 
     def __quitApplication(self):
-     self.__root.destroy()
+        self.__root.destroy()
 
     def __showAbout(self):
         showinfo("Notepad","Tatsumaki")
